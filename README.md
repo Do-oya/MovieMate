@@ -1,8 +1,8 @@
 # 영화 리뷰 프로젝트 To-Do 리스트
 
 ## 1. 프로젝트 초기 설정
-- [ ] **Spring Boot 프로젝트 생성**: IntelliJ에서 프로젝트 생성.
-- [ ] **의존성 추가**: Spring Web, Spring Data JPA, Thymeleaf, Spring Security, MySQL 추가.
+- [x] **Spring Boot 프로젝트 생성**: IntelliJ에서 프로젝트 생성.
+- [x] **의존성 추가**: Spring Web, Spring Data JPA, Thymeleaf, Spring Security, MySQL 추가.
 - [ ] **데이터베이스 설정**: `application.properties` 파일에 데이터베이스 연결 설정.
 
 ## 2. 영화 검색 및 외부 API 연동
