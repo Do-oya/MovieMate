@@ -3,12 +3,12 @@
 ## 1. 프로젝트 초기 설정
 - [x] **Spring Boot 프로젝트 생성**: IntelliJ에서 프로젝트 생성.
 - [x] **의존성 추가**: Spring Web, Spring Data JPA, Thymeleaf, Spring Security, MySQL 추가.
-- [ ] **데이터베이스 설정**: `application.properties` 파일에 데이터베이스 연결 설정.
+- [x] **데이터베이스 설정**: `application.properties` 파일에 데이터베이스 연결 설정.
 
 ## 2. 영화 검색 및 외부 API 연동
-- [ ] **TMDB API 키 발급**: TMDB에 가입하고 API 키 발급받기.
-- [ ] **외부 API 호출 설정**: `RestTemplate` 또는 `WebClient`로 TMDB API 설정.
-- [ ] **영화 목록 페이지 구현**: TMDB API에서 받아온 영화 목록을 웹 페이지에 표시.
+- [x] **TMDB API 키 발급**: TMDB에 가입하고 API 키 발급받기.
+- [x] **외부 API 호출 설정**: `RestTemplate`로 TMDB API 설정.
+- [x] **영화 목록 페이지 구현**: TMDB API에서 받아온 영화 목록을 웹 페이지에 표시.
 - [ ] **영화 세부 정보 페이지 구현**: 선택한 영화의 세부 정보를 웹 페이지에 표시.
 
 ## 3. 리뷰 기능 구현
