@@ -1,6 +1,7 @@
 package com.toy.moviemate.domain.movie.controller;
 
 import com.toy.moviemate.domain.movie.service.MovieService;
+import com.toy.moviemate.domain.review.service.ReviewService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class MovieControllerTest {
 
     @MockBean
     private MovieService movieService;
+
+    @MockBean
+    private ReviewService reviewService;
 
     @Test
     @DisplayName("영화 목록 페이지가 정상적으로 반환되어야 함")
