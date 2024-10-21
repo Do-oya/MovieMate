@@ -31,4 +31,9 @@ public class Review {
                 .movieId(movieId)
                 .build();
     }
+
+    // 테스트용 가짜 set
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
