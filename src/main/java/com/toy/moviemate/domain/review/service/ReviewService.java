@@ -28,4 +28,17 @@ public class ReviewService {
                 .map(review -> new ReviewDto(review.getId(), review.getComment(), review.getRating(), review.getMovieId()))
                 .collect(Collectors.toList());
     }
+
+    public void updateReview(ReviewDto reviewDto) {
+        Review review = reviewRepository.findById(reviewDto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
+
+        review.update(reviewDto.getComment(), reviewDto.getRating());
+        reviewRepository.save(review);
+    }
+
+    public ReviewDto getReviewById(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new IllegalArgumentException("Review not found" + reviewId));
+        return new ReviewDto(review.getId(), review.getComment(), review.getRating(), review.getMovieId());
+    }
 }

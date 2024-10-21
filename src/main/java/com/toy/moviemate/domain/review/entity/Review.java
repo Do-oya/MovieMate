@@ -1,6 +1,5 @@
 package com.toy.moviemate.domain.review.entity;
 
-import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -21,7 +20,6 @@ public class Review {
 
     private String comment;
     private Double rating;
-
     private String movieId;
 
     public static Review createReview(String comment, Double rating, String movieId) {
@@ -32,7 +30,24 @@ public class Review {
                 .build();
     }
 
-    // 테스트용 가짜 set
+    public void update(String comment, Double rating) {
+        this.comment = comment;
+        this.rating = rating;
+    }
+
+    /* 테스트 용 setter */
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public void setMovieId(String movieId) {
+        this.movieId = movieId;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

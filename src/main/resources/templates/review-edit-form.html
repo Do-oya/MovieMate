@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Review Edit Form</title>
+</head>
+<body>
+<h1>리뷰 수정</h1>
+
+<form th:action="@{/reviews/update/{id}(id=${review.id})}" method="post">
+  <input type="hidden" name="_method" value="put"/>
+  <input type="hidden" name="movieId" th:value="${review.movieId}"/>
+
+  <label for="comment">Comment:</label>
+  <input type="text" id="comment" name="comment" th:value="${review.comment}" required>
+
+  <label for="rating">Rating:</label>
+  <input type="number" id="rating" name="rating" th:value="${review.rating}" step="0.1" min="0" max="5" required>
+
+  <button type="submit">Update Review</button>
+</form>
+
+<a th:href="@{/movies/{movieId}(movieId=${review.movieId})}">Cancel</a>
+</body>
+</html>

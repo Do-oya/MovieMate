@@ -4,6 +4,7 @@ import com.toy.moviemate.domain.review.dto.ReviewDto;
 import com.toy.moviemate.domain.review.service.ReviewService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -11,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -53,5 +55,55 @@ public class ReviewControllerTest {
 
         // verify
         verify(reviewService).saveReview(any(ReviewDto.class));
+    }
+
+    @Test
+    @DisplayName("리뷰 수정 폼이 성공적으로 렌더링 되어야 함")
+    void testRenderEditReviewForm() throws Exception {
+        Long reviewId = 1L;
+        String movieId = "12345";
+
+        ReviewDto reviewDto = ReviewDto.builder()
+                .id(reviewId)
+                .movieId(movieId)
+                .comment("Good movie!")
+                .rating(4.5)
+                .build();
+
+        when(reviewService.getReviewById(reviewId)).thenReturn(reviewDto);
+
+        mockMvc.perform(get("/reviews/{reviewId}/edit", reviewId))
+                .andExpect(status().isOk())
+                .andExpect(view().name("review-edit-form"))
+                .andExpect(model().attributeExists("review"))
+                .andExpect(model().attribute("review", reviewDto));
+    }
+
+    @Test
+    @DisplayName("리뷰 수정 요청이 성공적으로 처리되어야 함")
+    void testUpdateReview() throws Exception {
+        Long reviewId = 1L;
+        String updatedComment = "Updated Comment";
+        double updatedRating = 4.8;
+        String movieId = "12345";
+
+        ReviewDto reviewDto = ReviewDto.builder()
+                .id(reviewId)
+                .movieId(movieId)
+                .comment(updatedComment)
+                .rating(updatedRating)
+                .build();
+
+        Mockito.doNothing().when(reviewService).updateReview(any(ReviewDto.class));
+
+        mockMvc.perform(post("/reviews/update/{reviewId}", reviewId)
+                        .param("movieId", movieId)
+                        .param("comment", updatedComment)
+                        .param("rating", String.valueOf(updatedRating))
+                        .param("_method", "put"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/movies/" + movieId));
+
+        verify(reviewService).updateReview(any(ReviewDto.class));
     }
 }
