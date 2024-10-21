@@ -3,23 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Movie Details</title>
-    <style>
-        .movie-details {
-            margin: 20px;
-        }
-        .movie-details img {
-            max-width: 300px;
-        }
-    </style>
 </head>
 <body>
-<div class="movie-details">
-    <h1 th:text="${movie['title']}">Movie Title</h1>
-    <img th:src="'https://image.tmdb.org/t/p/w300' + ${movie['poster_path']}" th:alt="${movie['title']}"/>
-    <p th:text="${movie['overview']}">Movie Overview</p>
-    <p>Release Date: <span th:text="${movie['release_date']}"></span></p>
-    <p>Average Vote: <span th:text="${movie['vote_average']}"></span></p>
-    <a th:href="@{/movies}">Back to Movies</a>
-</div>
+<h1 th:text="${movie['title']}">Movie Title</h1>
+<p th:text="${movie['description']}">Movie Description</p>
+
+<h2>Reviews</h2>
+<ul>
+    <li th:each="review : ${reviews}">
+        <p th:text="${review.comment}">Review Comment</p>
+        <p th:text="'Rating: ' + ${review.rating}">Rating</p>
+    </li>
+</ul>
+
+<a th:href="@{/reviews/new(movieId=${movie['id']})}">Add a review</a>
 </body>
 </html>

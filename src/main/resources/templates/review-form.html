@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Submit a Review</title>
+</head>
+<body>
+<h1>Submit a Review</h1>
+
+<!-- 리뷰 작성 폼 -->
+<form th:action="@{/reviews}" method="post">
+  <!-- 영화 ID를 hidden 필드로 전달 -->
+  <input type="hidden" th:value="${movieId}" name="movieId"/>
+
+  <!-- 리뷰 댓글 작성 -->
+  <label for="comment">Comment:</label>
+  <textarea id="comment" name="comment" rows="4" cols="50"></textarea><br/>
+
+  <!-- 평점 입력 -->
+  <label for="rating">Rating:</label>
+  <input type="number" id="rating" name="rating" step="0.1" min="0" max="10"/><br/>
+
+  <!-- 제출 버튼 -->
+  <input type="submit" value="Submit Review"/>
+</form>
+
+<a th:href="@{/movies/{movieId}(movieId=${movieId})}">Cancel</a>
+</body>
+</html>
