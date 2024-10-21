@@ -29,13 +29,11 @@ public class ReviewController {
     public String submitReview(@RequestParam("movieId") String movieId,
                                @RequestParam("comment") String comment,
                                @RequestParam("rating") Double rating) {
-        log.info(movieId);
-        log.info(comment);
-        log.info(String.valueOf(rating));
-        ReviewDto reviewDto = new ReviewDto();
-        reviewDto.setMovieId(movieId);
-        reviewDto.setComment(comment);
-        reviewDto.setRating(rating);
+        ReviewDto reviewDto = ReviewDto.builder()
+                .movieId(movieId)
+                .comment(comment)
+                .rating(rating)
+                .build();
         reviewService.saveReview(reviewDto);
         return "redirect:/movies/" + movieId;
     }
