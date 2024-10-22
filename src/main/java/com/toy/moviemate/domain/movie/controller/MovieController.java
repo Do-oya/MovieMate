@@ -2,7 +2,7 @@ package com.toy.moviemate.domain.movie.controller;
 
 import com.toy.moviemate.domain.movie.service.MovieService;
 import com.toy.moviemate.domain.review.dto.ReviewDto;
-import com.toy.moviemate.domain.review.service.ReviewService;
+import com.toy.moviemate.domain.review.service.ReviewQueryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +15,11 @@ import java.util.Map;
 public class MovieController {
 
     private final MovieService movieService;
-    private final ReviewService reviewService;
+    private final ReviewQueryService reviewQueryService;
 
-    public MovieController(MovieService movieService, ReviewService reviewService) {
+    public MovieController(MovieService movieService, ReviewQueryService reviewQueryService) {
         this.movieService = movieService;
-        this.reviewService = reviewService;
+        this.reviewQueryService = reviewQueryService;
     }
 
     @GetMapping("/movies")
@@ -32,7 +32,7 @@ public class MovieController {
     @GetMapping("/movies/{id}")
     public String getMovieDetails(@PathVariable("id") String movieId, Model model) {
         Map<String, Object> movieDetails = movieService.getMovieDetails(movieId);
-        List<ReviewDto> reviews = reviewService.getReviewsByMovieId(movieId);
+        List<ReviewDto> reviews = reviewQueryService.getReviewsByMovieId(movieId);
         model.addAttribute("movie", movieDetails);
         model.addAttribute("reviews", reviews);
         return "movie-details";
