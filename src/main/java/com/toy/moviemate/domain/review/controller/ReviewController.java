@@ -1,6 +1,7 @@
 package com.toy.moviemate.domain.review.controller;
 
 import com.toy.moviemate.domain.review.dto.ReviewDto;
+import com.toy.moviemate.domain.review.service.ReviewDeleteService;
 import com.toy.moviemate.domain.review.service.ReviewQueryService;
 import com.toy.moviemate.domain.review.service.ReviewSaveService;
 import com.toy.moviemate.domain.review.service.ReviewUpdateService;
@@ -16,11 +17,13 @@ public class ReviewController {
     private final ReviewQueryService reviewQueryService;
     private final ReviewSaveService reviewSaveService;
     private final ReviewUpdateService reviewUpdateService;
+    private final ReviewDeleteService reviewDeleteService;
 
-    public ReviewController(ReviewQueryService reviewQueryService, ReviewSaveService reviewSaveService, ReviewUpdateService reviewUpdateService) {
+    public ReviewController(ReviewQueryService reviewQueryService, ReviewSaveService reviewSaveService, ReviewUpdateService reviewUpdateService, ReviewDeleteService reviewDeleteService) {
         this.reviewQueryService = reviewQueryService;
         this.reviewSaveService = reviewSaveService;
         this.reviewUpdateService = reviewUpdateService;
+        this.reviewDeleteService = reviewDeleteService;
     }
 
     // 리뷰 작성 폼
@@ -67,5 +70,12 @@ public class ReviewController {
                 .build();
         reviewUpdateService.updateReview(reviewDto);
         return "redirect:/movies/" + movieId;
+    }
+
+    // 리뷰 삭제 요청 처리
+    @PostMapping("/reviews/delete/{reviewId}")
+    public String deleteReview(@PathVariable Long reviewId) {
+        reviewDeleteService.deleteReview(reviewId);
+        return "redirect:/movies";
     }
 }

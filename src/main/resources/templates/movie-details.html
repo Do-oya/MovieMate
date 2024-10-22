@@ -14,6 +14,10 @@
         <p th:text="${review.comment}">Review Comment</p>
         <p th:text="'Rating: ' + ${review.rating}">Rating</p>
         <a th:href="@{/reviews/{reviewId}/edit(reviewId=${review.id})}">Edit</a>
+        <form th:action="@{/reviews/delete/{reviewId}(reviewId=${review.id})}" method="post" style="display:inline">
+            <input type="hidden" name="_method" value="delete"/>
+            <button type="submit">Delete</button>
+        </form>
     </li>
 </ul>
 
