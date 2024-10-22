@@ -9,17 +9,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ReviewService {
+public class ReviewQueryService {
 
     private final ReviewRepository reviewRepository;
 
-    public ReviewService(ReviewRepository reviewRepository) {
+    public ReviewQueryService(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
-    }
-
-    public void saveReview(ReviewDto reviewDto) {
-        Review review = Review.createReview(reviewDto.getComment(), reviewDto.getRating(), reviewDto.getMovieId());
-        reviewRepository.save(review);
     }
 
     public List<ReviewDto> getReviewsByMovieId(String movieId) {
@@ -27,14 +22,6 @@ public class ReviewService {
         return reviews.stream()
                 .map(review -> new ReviewDto(review.getId(), review.getComment(), review.getRating(), review.getMovieId()))
                 .collect(Collectors.toList());
-    }
-
-    public void updateReview(ReviewDto reviewDto) {
-        Review review = reviewRepository.findById(reviewDto.getId())
-                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
-
-        review.update(reviewDto.getComment(), reviewDto.getRating());
-        reviewRepository.save(review);
     }
 
     public ReviewDto getReviewById(Long reviewId) {

@@ -1,7 +1,9 @@
 package com.toy.moviemate.domain.review.controller;
 
 import com.toy.moviemate.domain.review.dto.ReviewDto;
-import com.toy.moviemate.domain.review.service.ReviewService;
+import com.toy.moviemate.domain.review.service.ReviewQueryService;
+import com.toy.moviemate.domain.review.service.ReviewSaveService;
+import com.toy.moviemate.domain.review.service.ReviewUpdateService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,18 +13,24 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class ReviewController {
 
-    private final ReviewService reviewService;
+    private final ReviewQueryService reviewQueryService;
+    private final ReviewSaveService reviewSaveService;
+    private final ReviewUpdateService reviewUpdateService;
 
-    public ReviewController(ReviewService reviewService) {
-        this.reviewService = reviewService;
+    public ReviewController(ReviewQueryService reviewQueryService, ReviewSaveService reviewSaveService, ReviewUpdateService reviewUpdateService) {
+        this.reviewQueryService = reviewQueryService;
+        this.reviewSaveService = reviewSaveService;
+        this.reviewUpdateService = reviewUpdateService;
     }
 
+    // 리뷰 작성 폼
     @GetMapping("/reviews/new")
     public String showReviewForm(@RequestParam("movieId") String movieId, Model model) {
         model.addAttribute("movieId", movieId);
         return "review-form";
     }
 
+    // 리뷰 저장 요청 처리
     @PostMapping("/reviews")
     public String submitReview(@RequestParam("movieId") String movieId,
                                @RequestParam("comment") String comment,
@@ -32,17 +40,19 @@ public class ReviewController {
                 .comment(comment)
                 .rating(rating)
                 .build();
-        reviewService.saveReview(reviewDto);
+        reviewSaveService.saveReview(reviewDto);
         return "redirect:/movies/" + movieId;
     }
 
+    // 리뷰 수정 폼
     @GetMapping("/reviews/{reviewId}/edit")
     public String showReviewEditForm(@PathVariable Long reviewId, Model model) {
-        ReviewDto reviewDto = reviewService.getReviewById(reviewId);
+        ReviewDto reviewDto = reviewQueryService.getReviewById(reviewId);
         model.addAttribute("review", reviewDto);
         return "review-edit-form";
     }
 
+    // 리뷰 수정 요청 처리
     @PostMapping("/reviews/update/{reviewId}")
     public String updateReview(@PathVariable Long reviewId,
                                @RequestParam("movieId") String movieId,
@@ -55,7 +65,7 @@ public class ReviewController {
                 .comment(comment)
                 .rating(rating)
                 .build();
-        reviewService.updateReview(reviewDto);
+        reviewUpdateService.updateReview(reviewDto);
         return "redirect:/movies/" + movieId;
     }
 }

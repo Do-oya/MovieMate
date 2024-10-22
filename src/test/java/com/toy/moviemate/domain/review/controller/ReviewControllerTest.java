@@ -1,7 +1,9 @@
 package com.toy.moviemate.domain.review.controller;
 
 import com.toy.moviemate.domain.review.dto.ReviewDto;
-import com.toy.moviemate.domain.review.service.ReviewService;
+import com.toy.moviemate.domain.review.service.ReviewQueryService;
+import com.toy.moviemate.domain.review.service.ReviewSaveService;
+import com.toy.moviemate.domain.review.service.ReviewUpdateService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -24,7 +26,13 @@ public class ReviewControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ReviewService reviewService;
+    private ReviewQueryService reviewQueryService;
+
+    @MockBean
+    private ReviewSaveService reviewSaveService;
+
+    @MockBean
+    private ReviewUpdateService reviewUpdateService;
 
     @Test
     @DisplayName("리뷰 작성 폼이 성공적으로 렌더링되어야 함")
@@ -54,7 +62,7 @@ public class ReviewControllerTest {
                 .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/movies/12345"));
 
         // verify
-        verify(reviewService).saveReview(any(ReviewDto.class));
+        verify(reviewSaveService).saveReview(any(ReviewDto.class));
     }
 
     @Test
@@ -70,7 +78,7 @@ public class ReviewControllerTest {
                 .rating(4.5)
                 .build();
 
-        when(reviewService.getReviewById(reviewId)).thenReturn(reviewDto);
+        when(reviewQueryService.getReviewById(reviewId)).thenReturn(reviewDto);
 
         mockMvc.perform(get("/reviews/{reviewId}/edit", reviewId))
                 .andExpect(status().isOk())
@@ -94,7 +102,7 @@ public class ReviewControllerTest {
                 .rating(updatedRating)
                 .build();
 
-        Mockito.doNothing().when(reviewService).updateReview(any(ReviewDto.class));
+        Mockito.doNothing().when(reviewUpdateService).updateReview(any(ReviewDto.class));
 
         mockMvc.perform(post("/reviews/update/{reviewId}", reviewId)
                         .param("movieId", movieId)
@@ -104,6 +112,6 @@ public class ReviewControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/movies/" + movieId));
 
-        verify(reviewService).updateReview(any(ReviewDto.class));
+        verify(reviewUpdateService).updateReview(any(ReviewDto.class));
     }
 }
