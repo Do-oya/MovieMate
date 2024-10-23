@@ -1,6 +1,7 @@
 package com.toy.moviemate.domain.review.controller;
 
 import com.toy.moviemate.domain.review.dto.ReviewDto;
+import com.toy.moviemate.domain.review.service.ReviewDeleteService;
 import com.toy.moviemate.domain.review.service.ReviewQueryService;
 import com.toy.moviemate.domain.review.service.ReviewSaveService;
 import com.toy.moviemate.domain.review.service.ReviewUpdateService;
@@ -33,6 +34,9 @@ public class ReviewControllerTest {
 
     @MockBean
     private ReviewUpdateService reviewUpdateService;
+
+    @MockBean
+    private ReviewDeleteService reviewDeleteService;
 
     @Test
     @DisplayName("리뷰 작성 폼이 성공적으로 렌더링되어야 함")
@@ -68,19 +72,16 @@ public class ReviewControllerTest {
     @Test
     @DisplayName("리뷰 수정 폼이 성공적으로 렌더링 되어야 함")
     void testRenderEditReviewForm() throws Exception {
-        Long reviewId = 1L;
-        String movieId = "12345";
-
         ReviewDto reviewDto = ReviewDto.builder()
-                .id(reviewId)
-                .movieId(movieId)
+                .id(1L)
+                .movieId("12345")
                 .comment("Good movie!")
                 .rating(4.5)
                 .build();
 
-        when(reviewQueryService.getReviewById(reviewId)).thenReturn(reviewDto);
+        when(reviewQueryService.getReviewById(reviewDto.getId())).thenReturn(reviewDto);
 
-        mockMvc.perform(get("/reviews/{reviewId}/edit", reviewId))
+        mockMvc.perform(get("/reviews/{reviewId}/edit", reviewDto.getId()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("review-edit-form"))
                 .andExpect(model().attributeExists("review"))
@@ -90,27 +91,22 @@ public class ReviewControllerTest {
     @Test
     @DisplayName("리뷰 수정 요청이 성공적으로 처리되어야 함")
     void testUpdateReview() throws Exception {
-        Long reviewId = 1L;
-        String updatedComment = "Updated Comment";
-        double updatedRating = 4.8;
-        String movieId = "12345";
-
         ReviewDto reviewDto = ReviewDto.builder()
-                .id(reviewId)
-                .movieId(movieId)
-                .comment(updatedComment)
-                .rating(updatedRating)
+                .id(1L)
+                .movieId("12345")
+                .comment("Updated Comment")
+                .rating(4.8)
                 .build();
 
         Mockito.doNothing().when(reviewUpdateService).updateReview(any(ReviewDto.class));
 
-        mockMvc.perform(post("/reviews/update/{reviewId}", reviewId)
-                        .param("movieId", movieId)
-                        .param("comment", updatedComment)
-                        .param("rating", String.valueOf(updatedRating))
+        mockMvc.perform(post("/reviews/update/{reviewId}", reviewDto.getId())
+                        .param("movieId", reviewDto.getMovieId())
+                        .param("comment", reviewDto.getComment())
+                        .param("rating", String.valueOf(reviewDto.getRating()))
                         .param("_method", "put"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/movies/" + movieId));
+                .andExpect(redirectedUrl("/movies/" + reviewDto.getMovieId()));
 
         verify(reviewUpdateService).updateReview(any(ReviewDto.class));
     }
