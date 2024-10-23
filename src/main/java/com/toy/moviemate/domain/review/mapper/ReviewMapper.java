@@ -18,14 +18,14 @@ public class ReviewMapper {
     }
 
     public Review toEntity(ReviewDto reviewDto) {
-        return modelMapper.map(reviewDto, Review.class);
+        return Review.builder()
+                .comment(reviewDto.getComment())
+                .rating(reviewDto.getRating())
+                .movieId(reviewDto.getMovieId())
+                .build();
     }
 
     public ReviewDto toDto(Review review) {
         return modelMapper.map(review, ReviewDto.class);
-    }
-
-    public List<ReviewDto> toDtoList(List<Review> reviews) {
-        return reviews.stream().map(this::toDto).collect(Collectors.toList());
     }
 }
