@@ -34,11 +34,12 @@ public class ReviewUpdateServiceTest {
     void testUpdateReview() {
         // given
         Long reviewId = 1L;
-        Review existingReview = new Review();
-        existingReview.setId(reviewId);
-        existingReview.setComment("Good movie!");
-        existingReview.setRating(4.5);
-        existingReview.setMovieId("12345");
+        Review existingReview = Review.builder()
+                .comment("Good movie")
+                .rating(4.5)
+                .movieId("12345")
+                .build();
+
 
         ReviewDto updatedReviewDto = ReviewDto.builder()
                 .id(reviewId)

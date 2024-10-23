@@ -37,8 +37,6 @@ public class ReviewSaveServiceTest {
                 .rating(4.5)
                 .build();
 
-        Review review = Review.createReview(reviewDto.getComment(), reviewDto.getRating(), reviewDto.getMovieId());
-
         // when
         reviewSaveService.saveReview(reviewDto);
 
