@@ -30,7 +30,7 @@ public class ReviewController {
     @GetMapping("/reviews/new")
     public String showReviewForm(@RequestParam("movieId") String movieId, Model model) {
         model.addAttribute("movieId", movieId);
-        return "review-form";
+        return "review/review-form";
     }
 
     // 리뷰 저장 요청 처리
@@ -52,7 +52,7 @@ public class ReviewController {
     public String showReviewEditForm(@PathVariable Long reviewId, Model model) {
         ReviewDto reviewDto = reviewQueryService.getReviewById(reviewId);
         model.addAttribute("review", reviewDto);
-        return "review-edit-form";
+        return "review/review-edit-form";
     }
 
     // 리뷰 수정 요청 처리

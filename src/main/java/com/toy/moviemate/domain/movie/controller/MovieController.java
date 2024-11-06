@@ -26,7 +26,7 @@ public class MovieController {
     public String getPopularMovies(Model model) {
         Map<String, Object> movies = movieService.getPopularMovies();
         model.addAttribute("movies", movies.get("results"));
-        return "movies";
+        return "movie/movies";
     }
 
     @GetMapping("/movies/{id}")
@@ -35,6 +35,6 @@ public class MovieController {
         List<ReviewDto> reviews = reviewQueryService.getReviewsByMovieId(movieId);
         model.addAttribute("movie", movieDetails);
         model.addAttribute("reviews", reviews);
-        return "movie-details";
+        return "movie/movie-details";
     }
 }
