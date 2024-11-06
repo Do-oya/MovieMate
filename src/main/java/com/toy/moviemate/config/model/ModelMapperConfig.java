@@ -1,4 +1,4 @@
-package com.toy.moviemate.config;
+package com.toy.moviemate.config.model;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

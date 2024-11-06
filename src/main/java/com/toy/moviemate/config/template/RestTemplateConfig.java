@@ -1,4 +1,4 @@
-package com.toy.moviemate.config;
+package com.toy.moviemate.config.template;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
