@@ -1,12 +1,14 @@
 package com.toy.moviemate.security.dto;
 
 import com.toy.moviemate.domain.user.dto.UserDto;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
+@Data
 public class UserContext implements UserDetails {
     private final UserDto userDto;
     private final List<GrantedAuthority> authorities;
