@@ -1,6 +1,8 @@
 package com.toy.moviemate.security.provier;
 
+import com.toy.moviemate.security.details.FormAuthenticationDetails;
 import com.toy.moviemate.security.dto.UserContext;
+import com.toy.moviemate.security.exception.SecretException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,6 +27,10 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
         UserContext userContext = (UserContext) userDetailsService.loadUserByUsername(loginId);
         if (!passwordEncoder.matches(password, userContext.getPassword())) {
             throw new BadCredentialsException("Invalid password");
+        }
+        String secretKey = ((FormAuthenticationDetails) authentication.getDetails()).getSecretKey();
+        if (secretKey == null || !secretKey.equals("secret")) {
+            throw new SecretException("Invalid secret");
         }
         return new UsernamePasswordAuthenticationToken(userContext.getUserDto(), null, userContext.getAuthorities());
     }
