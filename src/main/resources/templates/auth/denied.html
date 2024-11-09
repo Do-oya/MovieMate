@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Error</title>
+</head>
+<body>
+<div>
+  <h3 th:text="${exception}"></h3>
+  <span th:text="${username} != null ? ${username} + ' 님은 접근 권한이 없습니다' : '비정상적인 접근입니다'"></span>
+</div>
+</body>
+</html>

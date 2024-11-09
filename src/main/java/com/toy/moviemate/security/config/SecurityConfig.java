@@ -1,5 +1,6 @@
 package com.toy.moviemate.security.config;
 
+import com.toy.moviemate.security.handler.FormAccessDeniedHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +33,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "images/**", "/js/**", "/favicon.*", "/*/icon-*").permitAll()
                         .requestMatchers("/", "/signup", "/login*").permitAll()
+                        .requestMatchers("/user").hasAuthority("ROLE_USER")
+                        .requestMatchers("/admin").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -42,7 +45,8 @@ public class SecurityConfig {
                         .successHandler(successHandler)
                         .failureHandler(failureHandler)
                 )
-                .authenticationProvider(authenticationProvider);
+                .authenticationProvider(authenticationProvider)
+                .exceptionHandling(exception -> exception.accessDeniedHandler(new FormAccessDeniedHandler("/denied")));
         return http.build();
     }
 }
