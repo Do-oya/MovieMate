@@ -1,8 +1,10 @@
 package com.toy.moviemate.domain.auth.login.controller;
 
+import com.toy.moviemate.domain.user.dto.UserDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -28,5 +30,13 @@ public class LoginController {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
         return "redirect:/login";
+    }
+
+    @GetMapping("/denied")
+    public String accessDenied(@RequestParam(value = "exception", required = false) String exception,
+                               @AuthenticationPrincipal UserDto userDto, Model model) {
+        model.addAttribute("username", userDto.getUsername());
+        model.addAttribute("exception", exception);
+        return "auth/denied";
     }
 }
