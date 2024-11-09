@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 public class UserContext implements UserDetails {
+
     private final UserDto userDto;
     private final List<GrantedAuthority> authorities;
 

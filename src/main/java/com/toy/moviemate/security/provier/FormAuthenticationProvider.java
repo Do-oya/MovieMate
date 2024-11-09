@@ -28,6 +28,7 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
         if (!passwordEncoder.matches(password, userContext.getPassword())) {
             throw new BadCredentialsException("Invalid password");
         }
+
         String secretKey = ((FormAuthenticationDetails) authentication.getDetails()).getSecretKey();
         if (secretKey == null || !secretKey.equals("secret")) {
             throw new SecretException("Invalid secret");
