@@ -19,11 +19,45 @@ public class MovieController {
     private final MovieServiceImpl movieService;
     private final ReviewService reviewService;
 
-    @GetMapping("/movies")
+    @GetMapping("/movies/home")
+    public String home(Model model) {
+        return "movie/home";
+    }
+
+    @GetMapping("/movies/popular")
     public String getPopularMovies(Model model) {
-        Map<String, Object> movies = movieService.getPopularMovies();
-        model.addAttribute("movies", movies.get("results"));
-        return "movie/movies";
+        model.addAttribute("movies", movieService.getPopularMovies().get("results"));
+        return "movie/movie-popular";
+    }
+
+    @GetMapping("/movies/latest")
+    public String getLatestMovies(Model model) {
+        model.addAttribute("movies", movieService.getLatestMovies().get("results"));
+        return "movie/movie-latest";
+    }
+
+    @GetMapping("/movies/now-playing")
+    public String getNowPlayingMovies(Model model) {
+        model.addAttribute("movies", movieService.getNowPlayingMovies().get("results"));
+        return "movie/movie-now-playing";
+    }
+
+    @GetMapping("/movies/upcoming")
+    public String getUpcomingMovies(Model model) {
+        model.addAttribute("movies", movieService.getUpcomingMovies().get("results"));
+        return "movie/movie-upcoming";
+    }
+
+    @GetMapping("/movies/korean")
+    public String getKoreanMovies(Model model) {
+        model.addAttribute("movies", movieService.getKoreanMovies().get("results"));
+        return "movie/movie-korean";
+    }
+
+    @GetMapping("/movies/foreign")
+    public String getForeignMovies(Model model) {
+        model.addAttribute("movies", movieService.getForeignMovies().get("results"));
+        return "movie/movie-foreign";
     }
 
     @GetMapping("/movies/{id}")
