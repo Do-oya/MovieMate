@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Movie List</title>
+  <style>
+    .movie {
+      margin-bottom: 20px;
+    }
+    .movie img {
+      max-width: 150px;
+    }
+    .buttons {
+      margin-bottom: 20px;
+    }
+    .buttons button {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+<h1>Movie List</h1>
+
+<!-- 버튼 목록 -->
+<div class="buttons">
+  <button onclick="location.href='/movies/popular'">인기 영화</button>
+  <button onclick="location.href='/movies/latest'">최신 영화</button>
+  <button onclick="location.href='/movies/now-playing'">현재 상영 중</button>
+  <button onclick="location.href='/movies/upcoming'">곧 개봉할 영화</button>
+  <button onclick="location.href='/movies/korean'">높은 평점 영화</button>
+  <button onclick="location.href='/movies/foreign'">높은 평점 영화</button>
+</div>
+
+<!-- 영화 목록 -->
+<ul>
+  <li th:each="movie : ${movies}" class="movie">
+    <!-- 영화 세부 정보 페이지로 이동하는 링크 (ID 포함) -->
+    <a th:href="@{/movies/{id}(id=${movie['id']})}">
+      <h2 th:text="${movie['title']}">Movie Title</h2>
+      <img th:src="'https://image.tmdb.org/t/p/w200' + ${movie['poster_path']}" th:alt="${movie['title']}"/>
+    </a>
+    <p th:text="${movie['overview']}">Movie Overview</p>
+    <p>Release Date: <span th:text="${movie['release_date']}"></span></p>
+    <p>Average Vote: <span th:text="${movie['vote_average']}"></span></p>
+  </li>
+</ul>
+</body>
+</html>
