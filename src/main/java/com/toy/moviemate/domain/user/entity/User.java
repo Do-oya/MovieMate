@@ -1,17 +1,19 @@
 package com.toy.moviemate.domain.user.entity;
 
+import com.toy.moviemate.domain.admin.entity.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,5 +28,9 @@ public class User {
     @Column(nullable = false)
     private int age;
 
-    private String roles;
+    @ManyToMany(fetch = FetchType.LAZY, cascade={CascadeType.MERGE})
+    @JoinTable(name = "account_roles", joinColumns = { @JoinColumn(name = "account_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "role_id") })
+    @ToString.Exclude
+    private Set<Role> userRoles = new HashSet<>();
 }
