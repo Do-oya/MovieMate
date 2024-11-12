@@ -5,26 +5,21 @@ import com.toy.moviemate.domain.review.service.ReviewDeleteService;
 import com.toy.moviemate.domain.review.service.ReviewQueryService;
 import com.toy.moviemate.domain.review.service.ReviewSaveService;
 import com.toy.moviemate.domain.review.service.ReviewUpdateService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
 @Slf4j
+@Controller
+@RequiredArgsConstructor
 public class ReviewController {
 
     private final ReviewQueryService reviewQueryService;
     private final ReviewSaveService reviewSaveService;
     private final ReviewUpdateService reviewUpdateService;
     private final ReviewDeleteService reviewDeleteService;
-
-    public ReviewController(ReviewQueryService reviewQueryService, ReviewSaveService reviewSaveService, ReviewUpdateService reviewUpdateService, ReviewDeleteService reviewDeleteService) {
-        this.reviewQueryService = reviewQueryService;
-        this.reviewSaveService = reviewSaveService;
-        this.reviewUpdateService = reviewUpdateService;
-        this.reviewDeleteService = reviewDeleteService;
-    }
 
     // 리뷰 작성 폼
     @GetMapping("/reviews/new")
