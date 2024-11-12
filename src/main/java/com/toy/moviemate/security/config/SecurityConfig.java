@@ -34,7 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/css/**", "images/**", "/js/**", "/favicon.*", "/*/icon-*").permitAll()
                         .requestMatchers("/", "/signup", "/login*").permitAll()
                         .requestMatchers("/user").hasAuthority("ROLE_USER")
-                        .requestMatchers("/admin").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -44,7 +44,7 @@ public class SecurityConfig {
                         .authenticationDetailsSource(authenticationDetailsSource)
                         .successHandler(successHandler)
                         .failureHandler(failureHandler)
-                )
+                        .permitAll())
                 .authenticationProvider(authenticationProvider)
                 .exceptionHandling(exception -> exception.accessDeniedHandler(new FormAccessDeniedHandler("/denied")));
         return http.build();
