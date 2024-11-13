@@ -1,6 +1,6 @@
 package com.toy.moviemate.domain.movie.service.impl;
 
-import com.toy.moviemate.api.tmdb.service.impl.TmdbApiServiceImpl;
+import com.toy.moviemate.domain.movie.tmdb.impl.TmdbApiServiceImpl;
 import com.toy.moviemate.domain.movie.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

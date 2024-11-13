@@ -1,6 +1,6 @@
-package com.toy.moviemate.api.tmdb.service.impl;
+package com.toy.moviemate.domain.movie.tmdb.impl;
 
-import com.toy.moviemate.api.tmdb.service.TmdbApiService;
+import com.toy.moviemate.domain.movie.tmdb.TmdbApiService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

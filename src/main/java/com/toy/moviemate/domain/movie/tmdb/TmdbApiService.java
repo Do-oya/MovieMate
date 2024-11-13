@@ -1,4 +1,4 @@
-package com.toy.moviemate.api.tmdb.service;
+package com.toy.moviemate.domain.movie.tmdb;
 
 import java.util.Map;
 
