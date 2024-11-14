@@ -19,6 +19,7 @@ public class ReviewMapper {
                 .comment(reviewDto.getComment())
                 .rating(reviewDto.getRating())
                 .movieId(reviewDto.getMovieId())
+                .username(reviewDto.getUsername())
                 .build();
     }
 

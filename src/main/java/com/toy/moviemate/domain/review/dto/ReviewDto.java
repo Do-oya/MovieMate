@@ -16,12 +16,14 @@ public class ReviewDto {
     private String comment;
     private Double rating;
     private String movieId;
+    private String username;
 
     public Review toEntity() {
         return Review.builder()
                 .comment(this.comment)
                 .rating(this.rating)
                 .movieId(this.movieId)
+                .username(this.username)
                 .build();
     }
 }

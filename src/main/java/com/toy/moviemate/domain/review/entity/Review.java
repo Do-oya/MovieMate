@@ -1,11 +1,8 @@
 package com.toy.moviemate.domain.review.entity;
 
+import com.toy.moviemate.domain.user.entity.User;
+import jakarta.persistence.*;
 import lombok.*;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 @Entity
 @Getter
@@ -21,6 +18,7 @@ public class Review {
     private String comment;
     private Double rating;
     private String movieId;
+    private String username;
 
     public void update(String comment, Double rating) {
         this.comment = comment;

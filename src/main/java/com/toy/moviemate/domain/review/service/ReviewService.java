@@ -1,6 +1,7 @@
 package com.toy.moviemate.domain.review.service;
 
 import com.toy.moviemate.domain.review.dto.ReviewDto;
+import com.toy.moviemate.domain.user.dto.UserDto;
 
 import java.util.List;
 
